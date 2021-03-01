@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  post '/demouser', to: 'users#create_demo_user', as: 'create_demo_user'
+
   resources :feeds, only: [:index, :create, :destroy]
   get 'read', to: 'feeds#read'
   get 'read/:id', to: 'feeds#read_feed', as: 'read_feed'
