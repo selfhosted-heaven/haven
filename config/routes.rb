@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get '/demouser/:email', to: 'users#create_demo_user', as: 'create_demo_user'
+
   get 'login_links/validate'
   get 'markdown', to: 'static#markdown'
   get 'themes', to: 'static#themes'
