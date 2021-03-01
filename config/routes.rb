@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   get 'read', to: 'feeds#read'
   get 'read/:id', to: 'feeds#read_feed', as: 'read_feed'
 
+  get '/demouser/:email', to: 'users#create_demo_user', as: 'create_demo_user'
+
   get 'login_links/validate'
   get 'markdown', to: 'static#markdown'
   get 'themes', to: 'static#themes'
