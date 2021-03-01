@@ -5,7 +5,13 @@ class PostsController < ApplicationController
   before_action :verify_publisher, except: [:index, :show, :rss]
 
   def index
-    @posts = Post.order(datetime: :desc).page(params[:page])
+    @posts = nil
+    if (current_user.admin == 1)
+      @posts = Post.order(datetime: :desc).page(params[:page])
+    else
+      @posts = Post.where(["author_id = ?", current_user.id])
+          .order(datetime: :desc).page(params[:page])
+    end
     @settings = SettingsController.get_setting
     @css = true
   end
@@ -14,7 +20,9 @@ class PostsController < ApplicationController
     if !check_basic_auth
       head :unauthorized
     else
-      @posts = Post.order(datetime: :desc).page(1)
+      user = basic_auth_user
+      @posts = Post.where(["author_id = ?", user.id])
+          .order(datetime: :desc).page(params[:page])
       @settings = SettingsController.get_setting
       render layout: false
     end
