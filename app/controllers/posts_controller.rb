@@ -20,7 +20,9 @@ class PostsController < ApplicationController
     if !check_basic_auth
       head :unauthorized
     else
-      @posts = Post.order(datetime: :desc).page(1)
+      user = basic_auth_user
+      @posts = Post.where(["author_id = ?", user.id])
+          .order(datetime: :desc).page(params[:page])
       @settings = SettingsController.get_setting
       render layout: false
     end
