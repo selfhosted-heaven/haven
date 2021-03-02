@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
   skip_before_action :verify_authenticity_token, only: [:create_demo_user]
-
   before_action :authenticate_user!, except: [:create_demo_user]
   before_action :verify_admin, except: [:create_demo_user]
 
