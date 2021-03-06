@@ -11,12 +11,14 @@ else
   puts "Running in dry mode, pass parameter \"yes\" to actually delete everything"
 end
 
+Image.find_each do |i|
+  STDERR.puts "Deleting image: #{i.to_s}"
+  i.destroy if confirm
+end
+
 User.find_each do |u|
-  puts "Deleting user: #{u.email}"
+  STDERR.puts "Deleting user:"
+  puts u.email
   u.destroy if confirm
 end
 
-Image.find_each do |i|
-  puts "Deleting image: #{i.to_s}"
-  i.destroy if confirm
-end
