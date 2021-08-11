@@ -16,8 +16,8 @@ Image.find_each do |i|
   i.destroy if confirm
 end
 
+STDERR.puts "Deleting users"
 User.find_each do |u|
-  STDERR.puts "Deleting user:"
   puts "\"#{u.created_at.to_s}\",\"#{u.email}\""
   u.destroy if confirm
 end
