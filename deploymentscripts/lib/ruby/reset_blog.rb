@@ -18,7 +18,7 @@ end
 
 User.find_each do |u|
   STDERR.puts "Deleting user:"
-  puts u.email
+  puts "\"#{u.created_at.to_s}\",\"#{u.email}\""
   u.destroy if confirm
 end
 
