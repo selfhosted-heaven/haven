@@ -15,15 +15,19 @@ class UsersController < ApplicationController
     @email = params[:email]
     @password = Devise.friendly_token.first(20)
     admin = 2 # Publisher
-    @user = User.create!(
-      email: @email,
-      name: "",
-      admin: admin,
-      password: @password,
-      basic_auth_username: Devise.friendly_token.first(10),
-      basic_auth_password: Devise.friendly_token.first(10)
-    )
-    render :show_demo_user
+    if (!!@email)
+      @user = User.create!(
+        email: @email,
+        name: "",
+        admin: admin,
+        password: @password,
+        basic_auth_username: Devise.friendly_token.first(10),
+        basic_auth_password: Devise.friendly_token.first(10)
+      )
+      render :show_demo_user
+    else
+      render :demo_no_email
+    end
   end
 
   def create
