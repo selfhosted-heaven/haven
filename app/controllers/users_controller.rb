@@ -15,7 +15,7 @@ class UsersController < ApplicationController
     @email = params[:email]
     @password = Devise.friendly_token.first(20)
     admin = 2 # Publisher
-    if (!!@email)
+    unless @email.nil? or (@email=="")
       @user = User.create!(
         email: @email,
         name: "",
