@@ -5,13 +5,8 @@ class PostsController < ApplicationController
   before_action :verify_publisher, except: [:index, :show, :rss]
 
   def index
-    @posts = nil
-    if (current_user.admin == 1)
-      @posts = Post.order(datetime: :desc).page(params[:page])
-    else
-      @posts = Post.where(["author_id = ?", current_user.id])
-          .order(datetime: :desc).page(params[:page])
-    end
+    @posts = Post.order(datetime: :desc).page(params[:page])
+    @recent_comments = Comment.where('created_at >= ?', 1.week.ago).order(created_at: :desc)
     @settings = SettingsController.get_setting
     @css = true
   end
